@@ -1,0 +1,14 @@
+{
+  "name": "gatsby-source-footballdatav2",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ludovic Bonnet <ludovic@bonnet.pro>",
+  "license": "ISC",
+  "dependencies": {
+    "football-data-v2": "github:ludobonnet/football-data-v2"
+  }
+}
