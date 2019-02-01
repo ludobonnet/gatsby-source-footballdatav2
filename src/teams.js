@@ -1,5 +1,3 @@
-"use strict";
-
 module.exports = {
   511: 'TFC',
   514: 'Caen',
@@ -20,5 +18,5 @@ module.exports = {
   547: 'Reims',
   548: 'Monaco',
   556: 'Nîmes',
-  576: 'RCS'
-};
+  576: 'RCS',
+}
