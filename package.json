@@ -1,12 +1,13 @@
 {
   "name": "gatsby-source-footballdatav2",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "lint": "eslint --ext .js src/**"
   },
   "author": "Ludovic Bonnet <ludovic@bonnet.pro>",
   "license": "MIT",
@@ -17,8 +18,14 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "babel-eslint": "^10.0.2",
     "babel-preset-gatsby-package": "^0.1.3",
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.2",
+    "prettier": "^1.18.2"
   },
   "homepage": "https://github.com/ludobonnet/gatsby-source-footballdatav2",
   "repository": "https://github.com/ludobonnet/gatsby-source-footballdatav2",

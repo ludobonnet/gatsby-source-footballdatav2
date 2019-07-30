@@ -64,41 +64,77 @@ exports.sourceNodes = async ({
     });
     createNode(nodeCurrentSeason);
     aSeasons[nodeCurrentSeason.id] = nodeCurrentSeason.id;
-    standings.standings.map(standing => {
-      let label = null;
 
-      switch (standing.type) {
-        case 'TOTAL':
-          label = 'Total';
-          break;
+    if (standings.standings > 0) {
+      standings.standings.map(standing => {
+        let label = null;
 
-        case 'HOME':
-          label = 'Home';
-          break;
+        switch (standing.type) {
+          case 'TOTAL':
+            label = 'Total';
+            break;
 
-        case 'AWAY':
-          label = 'Away';
-          break;
-      }
+          case 'HOME':
+            label = 'Home';
+            break;
 
-      standing.table.map(rank => {
-        const nodeStanding = processNode({
-          type: `FootStanding${label}`,
-          id: rank.position,
-          content: rank
+          case 'AWAY':
+            label = 'Away';
+            break;
+        }
+
+        standing.table.map(rank => {
+          const nodeStanding = processNode({
+            type: `FootStanding${label}`,
+            id: rank.position,
+            content: rank
+          });
+          nodeStanding.competition___NODE = nodeCurrentCompetition.id;
+          nodeStanding.season___NODE = nodeCurrentSeason.id;
+          createNode(nodeStanding);
         });
-        nodeStanding.competition___NODE = nodeCurrentCompetition.id;
-        nodeStanding.season___NODE = nodeCurrentSeason.id;
-        createNode(nodeStanding);
       });
-    });
-    matches.matches.map(match => {
-      if (match.status == 'SCHEDULED') {
-        delete match.score;
-      }
+    } else {
+      const nodeStanding = processNode({
+        type: `FootStandingTotal`,
+        id: 516,
+        content: {
+          team: {
+            id: 516,
+            name: ''
+          },
+          position: 0,
+          playedGames: 0,
+          won: 0,
+          draw: 0,
+          lost: 0,
+          points: 0,
+          goalsFor: 0,
+          goalsAgainst: 0,
+          goalDifference: 0,
+          competition: {
+            name: 0,
+            lastUpdated: ''
+          },
+          season: {
+            startDate: 0,
+            endDate: 0
+          }
+        }
+      });
+      nodeStanding.competition___NODE = nodeCurrentCompetition.id;
+      nodeStanding.season___NODE = nodeCurrentSeason.id;
+      createNode(nodeStanding);
+    }
 
+    matches.matches.map(match => {
+      // if (match.status == 'SCHEDULED') {
+      //   delete match.score
+      // }
       match.homeTeam.surname = teams[match.homeTeam.id];
       match.awayTeam.surname = teams[match.awayTeam.id];
+      if (match.score.fullTime.homeTeam === null) match.score.fullTime.homeTeam = '';
+      if (match.score.fullTime.awayTeam === null) match.score.fullTime.awayTeam = '';
 
       if (aCompetitions[match.competition.id] === undefined) {
         const nodeCompetition = processNode({
